@@ -18,9 +18,10 @@ export default {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
   },
 
-  loading: '~/components/loading.vue',
+  // loading: '~/components/Loading.vue',
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: ['element-ui/lib/theme-chalk/index.css', 'assets/css/transitions.css'],
+  css: ['element-ui/lib/theme-chalk/index.css'],
+  // css: ['element-ui/lib/theme-chalk/index.css', 'assets/css/transitions.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: ['@/plugins/element-ui'],
