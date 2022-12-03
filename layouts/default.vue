@@ -1,6 +1,6 @@
 <template>
-  <div class="center">
-    <ElHeader>
+  <div class="main-container center">
+    <ElHeader class="main-container">
       <ElRow>
         <ElCol :span="4">
           <div class="logo-container">
@@ -29,7 +29,7 @@
         </ElCol>
       </ElRow>
     </ElHeader>
-    <ElContainer>
+    <ElContainer class="container">
       <nuxt />
     </ElContainer>
     <ElFooter class="footer-container"> Copyright © 2022 MISCAN </ElFooter>
@@ -54,7 +54,26 @@ export default {
 }
 </script>
 
-<style scoped>
+<style >
+body {
+  background-color: #EDFFFD;
+}
+.main-container {
+  min-width: 320px;
+  width: 95vw;
+  max-width: 1366px;
+  margin: 16px auto;
+}
+.container {
+  min-width: 300px;
+  width: 100%;
+  max-width: 1300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 121px);
+}
 .center {
   display: grid;
   place-content: center;
@@ -75,5 +94,8 @@ export default {
   justify-items: center;
   width: 100%;
   margin: 10px auto;
+}
+.w-full {
+  width: 100%;
 }
 </style>
