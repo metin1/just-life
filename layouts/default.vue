@@ -1,38 +1,38 @@
 <template>
   <div class="center">
-    <el-header>
-      <el-row>
-        <el-col :span="4">
+    <ElHeader>
+      <ElRow>
+        <ElCol :span="4">
           <div class="logo-container">
-            <img
-              class="center"
-              src="../assets/logo.png"
-              width="45"
-              height="45"
-              alt="logo"
-            />
+            <NuxtLink to="/">
+              <img
+                class="logo"
+                src="../assets/logo.png"
+                width="45"
+                height="45"
+                alt="logo"
+              />
+            </NuxtLink>
           </div>
-        </el-col>
-        <el-col :span="20">
-          <el-menu
+        </ElCol>
+        <ElCol :span="20">
+          <ElMenu
             :default-active="activeIndex"
-            class="el-menu-demo"
+            class="ElMenu-demo"
             mode="horizontal"
           >
-            <el-menu-item index="1"
-              ><nuxt-link to="/">Packages</nuxt-link>
-            </el-menu-item>
-            <el-menu-item index="2"
-              ><nuxt-link to="/day-selection">Day Selection</nuxt-link>
-            </el-menu-item>
-          </el-menu>
-        </el-col>
-      </el-row>
-    </el-header>
-    <el-container>
+            <ElMenu-item index="1" @click="goToHome"> Packages </ElMenu-item>
+            <ElMenu-item index="2" @click="goToDaySelection"
+              >Day Selection
+            </ElMenu-item>
+          </ElMenu>
+        </ElCol>
+      </ElRow>
+    </ElHeader>
+    <ElContainer>
       <nuxt />
-    </el-container>
-    <el-footer class="footer-container "> Copyright © 2022 MISCAN </el-footer>
+    </ElContainer>
+    <ElFooter class="footer-container"> Copyright © 2022 MISCAN </ElFooter>
   </div>
 </template>
 
@@ -42,6 +42,14 @@ export default {
     return {
       activeIndex: '1',
     }
+  },
+  methods: {
+    goToHome() {
+      this.$router.push('/')
+    },
+    goToDaySelection() {
+      this.$router.push('/day-selection')
+    },
   },
 }
 </script>
@@ -57,6 +65,9 @@ export default {
   display: flex;
   justify-content: center;
   justify-items: center;
+}
+.logo {
+  cursor: pointer;
 }
 .footer-container {
   display: flex;
