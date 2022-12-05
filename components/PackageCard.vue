@@ -138,28 +138,20 @@ export default {
           id: 0,
           packageName: 'One-time cleaning',
           name: 'One-time cleaning',
-          description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec auctor, nisl eget ultricies tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nunc eget nisl. Donec auctor, nisl eget ultricies tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nunc eget nisl.',
           isOneTime: true,
           price: 40,
           visit: 1,
           discount: 0,
-          image:
-            'https://images.unsplash.com/photo-1616161616161-1b1b1b1b1b1b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
           extraInformation: ["We'll clean your home from top to bottom"],
         },
         {
           id: 1,
           packageName: '1 visit per week package',
           name: '1 visit per week',
-          description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec auctor, nisl eget ultricies tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nunc eget nisl. Donec auctor, nisl eget ultricies tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nunc eget nisl.',
           isOneTime: false,
           visit: 1,
           price: 30,
           discount: 0.12,
-          image:
-            'https://images.unsplash.com/photo-1616161616161-1b1b1b1b1b1b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
           extraInformation: [
             '4 visits per month',
             'Same cleaner guaranteed',
@@ -171,14 +163,10 @@ export default {
           id: 2,
           packageName: '2 visits per week package',
           name: '2 visit per week',
-          description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec auctor, nisl eget ultricies tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nunc eget nisl. Donec auctor, nisl eget ultricies tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nunc eget nisl.',
           isOneTime: false,
           visit: 2,
           price: 27,
           discount: 0.15,
-          image:
-            'https://images.unsplash.com/photo-1616161616161-1b1b1b1b1b1b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
           extraInformation: [
             '8 visits per month',
             'Same cleaner guaranteed',
@@ -190,14 +178,10 @@ export default {
           id: 3,
           packageName: '3 visits per week package',
           name: '3 visit per week',
-          description:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec auctor, nisl eget ultricies tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nunc eget nisl. Donec auctor, nisl eget ultricies tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nunc eget nisl.',
           isOneTime: false,
           visit: 3,
           price: 25,
           discount: 0.18,
-          image:
-            'https://images.unsplash.com/photo-1616161616161-1b1b1b1b1b1b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
           extraInformation: [
             '12 visits per month',
             'Same cleaner guaranteed',

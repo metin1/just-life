@@ -20,11 +20,13 @@
           v-show="day.isSelected"
         >
           {{ day?.fullDate.toLocaleDateString('en-US') }} -
-          {{ day?.weekDay }}
+          {{ day?.weekDay }} {{ day?.time ? ` - ${day?.time}` : '' }}
         </li>
       </ul>
       <NuxtLink to="/">
-        <button class="button next-button large-button" @click="handleReset" >Book another package</button>
+        <button class="button next-button large-button" @click="handleReset">
+          Book another package
+        </button>
       </NuxtLink>
     </div>
     <div v-else-if="selectedPackage?.name" class="selection">
@@ -54,8 +56,7 @@
           :disabled="day.isDisabled"
         >
           {{ day?.fullDate.toLocaleDateString('en-US') }} -
-
-          {{ day?.weekDay }} - {{ day?.isDisabled ? 'Disabled' : 'ND' }} - {{ day?.isSelected ? 'Selected' : 'NS' }}
+          {{ day?.weekDay }} {{ day?.time ? ` - ${day?.time}` : '' }}
         </button>
       </div>
       <div
@@ -84,9 +85,26 @@
       ></el-button>
       <h2>Please select a package to proceed.</h2>
       <NuxtLink to="/">
-        <button class="button next-button large-button">Go Package Selection Page</button>
+        <button class="button next-button large-button">
+          Go Package Selection Page
+        </button>
       </NuxtLink>
     </div>
+    <el-dialog
+      title="Please select cleaning time"
+      :visible.sync="open"
+      width="30%"
+      center
+    >
+      <span slot="footer" class="dialog-footer">
+        <el-button type="primary" @click="handleSelectTime('9AM - 1PM')"
+          >9AM - 1PM</el-button
+        >
+        <el-button type="primary" @click="handleSelectTime('5PM - 9PM')"
+          >5PM - 9PM</el-button
+        >
+      </span>
+    </el-dialog>
   </ElContainer>
 </template>
 
@@ -101,6 +119,8 @@ export default {
       dayArray: [],
       totalSelectedDays: 0,
       isScheduled: false,
+      open: false,
+      selectedDay: {},
     }
   },
   mounted() {
@@ -121,9 +141,16 @@ export default {
   },
   methods: {
     selectDay: function (day) {
+      this.selectedDay = day
+      if (day.time) {
+        return this.handleSelectTime(null)
+      }
+      this.open = true
+    },
+    handleSelectTime: function (time) {
       const selectedDays = this.dayArray.map((d) => {
-        return d?.weekDay === day?.weekDay
-          ? { ...d, isSelected: !d.isSelected }
+        return d?.weekDay === this.selectedDay?.weekDay
+          ? { ...d, isSelected: !d.isSelected, time }
           : d
       })
 
@@ -138,6 +165,7 @@ export default {
       })
 
       this.dayArray = disabledDays
+      this.open = false
     },
     getDayContent() {
       return `day${this.selectedPackage?.visit > 1 ? 's' : ''}`
@@ -150,7 +178,7 @@ export default {
       this.isScheduled = false
       this.selectedPackage = {}
       this.dayArray = []
-      this.totalSelectedDay= 0
+      this.totalSelectedDay = 0
       localStorage.removeItem('selectedPackage')
       localStorage.removeItem('dayArray')
     },
