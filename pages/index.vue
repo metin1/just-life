@@ -7,7 +7,7 @@ import Vue from 'vue'
 import PackageCard from '~/components/PackageCard.vue'
 
 export default Vue.extend({
-    name: "IndexPage",
+    name: "HomePage",
     components: { PackageCard }
 })
 </script>
