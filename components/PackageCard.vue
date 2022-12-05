@@ -4,7 +4,7 @@
     <ElCarousel
       type="card"
       arrow="always"
-      :interval="40000"
+      :interval="0"
       :autoplay="false"
       height="380px"
       width="300px"
@@ -20,13 +20,12 @@
               class="front-content w-full"
               :style="
                 selectedPackage?.id === pack.id
-                  ? 'border: #006658 4px solid;'
-                  : 'border: #ebebeb 4px solid;'
+                  ? 'border: var(--secondary-color) 5px solid; '
+                  : 'border: var(--light-color) 4px solid;'
               "
             >
               <div class="package-card-header" slot="header">
                 <h3>{{ pack.name }}</h3>
-                <h3>{{ selectedPackage?.id  }}</h3>
               </div>
               <div>
                 <div class="grey-text">FROM</div>
@@ -40,21 +39,33 @@
                 </div>
               </div>
               <button
-                class="detail-button front-detail-button"
+                class="button detail-button front-detail-button"
                 @click="flipCardSwitch(pack.id)"
               >
                 Detail
               </button>
               <button
-                class="select-button front-select-button"
+                class="button select-button front-select-button"
                 @click="handleSelectPackage(pack)"
+                :style="
+                selectedPackage?.id === pack.id
+                  ? 'backgroundColor: var(--secondary-color);'
+                  : 'backgroundColor: var(--dark-color);'
+              "
               >
-                Select
+                {{selectedPackage?.id === pack.id ? 'Selected' : 'Select'}}
               </button>
             </ElCard>
           </div>
           <div class="back" v-show="detailCard[pack.id]" key="back">
-            <ElCard class="back-content">
+            <ElCard
+              class="back-content"
+              :style="
+                selectedPackage?.id === pack.id
+                  ? 'border: var(--secondary-color) 5px solid;'
+                  : 'border: var(--light-color) 4px solid;'
+              "
+            >
               <div slot="header">
                 <h3>{{ pack.name }}</h3>
               </div>
@@ -65,12 +76,14 @@
                 >
                   {{ info }}
                 </li>
-                <li v-if="packages.length === index">
-                  Save up to
-                  {{ calcSave(pack.price, pack.discount, pack.visit) }} SAR
+                <li v-if="pack?.extraInformation?.length > 1">
+                  Save up to {{ calcSave(pack.price, pack.visit) }} SAR
                 </li>
               </ul>
-              <button class="close-button" @click="flipCardSwitch(pack.id)">
+              <button
+                class="button close-button"
+                @click="flipCardSwitch(pack.id)"
+              >
                 Close
               </button>
             </ElCard>
@@ -78,6 +91,24 @@
         </transition-group>
       </ElCarouselItem>
     </ElCarousel>
+    <div class="selection">
+      <h4
+        :style="
+          selectedPackage?.name
+            ? 'color: var(--dark-color)'
+            : 'color: var(--secondary-color)'
+        "
+      >
+        Selected Package: {{ selectedPackage?.name || 'none' }}
+      </h4>
+      <p v-if="!!selectedPackage?.name">
+        If you are ready to proceed, please click the button below.
+      </p>
+      <p v-else>Please select a package to proceed.</p>
+      <button class="button next-button" :disabled="!selectedPackage?.name">
+        Next
+      </button>
+    </div>
   </ElContainer>
 </template>
 
@@ -102,7 +133,7 @@ export default {
           discount: 0,
           image:
             'https://images.unsplash.com/photo-1616161616161-1b1b1b1b1b1b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
-          extraInformation: [],
+          extraInformation: ["We'll clean your home from top to bottom"],
         },
         {
           id: 1,
@@ -121,7 +152,6 @@ export default {
             'Same cleaner guaranteed',
             'Monthly contract',
             'Valid for 1 month, Available for all weekdays excluding Friday',
-            'Save up to {{calcSave(pack.price, pack.discount, pack.visit)}} SAR',
           ],
         },
         {
@@ -141,7 +171,6 @@ export default {
             'Same cleaner guaranteed',
             'Monthly contract',
             'Valid for 1 month, Available for all weekdays excluding Friday',
-            'Save up to {price} SAR',
           ],
         },
         {
@@ -161,7 +190,6 @@ export default {
             'Same cleaner guaranteed',
             'Monthly contract',
             'Valid for 1 month, Available for all weekdays excluding Friday',
-            'Save up to {price} SAR',
           ],
         },
       ],
@@ -171,16 +199,20 @@ export default {
   methods: {
     flipCardSwitch: function (id) {
       this.flipCard = !this.flipCard
-      const transferFlip = [...this.detailCard]
-      transferFlip[id] = !transferFlip[id]
+      const transferFlip = [false, false, false]
+      transferFlip[id] = !this.detailCard[id]
       this.detailCard = transferFlip
     },
-    calcSave(price, discount, visit) {
-      return (40 - price * discount) * 4 * visit
+    calcSave(price, visit) {
+      return (40 - price) * 4 * visit
     },
     handleSelectPackage: function (pack) {
-    console.log(`LL: pack`, pack)
-      this.selectedPackage = pack
+      if (this.selectedPackage?.name === pack.name) {
+        this.selectedPackage = {}
+      } else {
+        this.selectedPackage = pack
+      }
+      this.detailCard = [false, false, false]
       localStorage.setItem('selectedPackage', JSON.stringify(pack))
     },
   },
@@ -209,7 +241,7 @@ export default {
   align-items: center;
 }
 .save-tag {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 400;
   color: #e4e4e4;
   background-color: #006658;
@@ -222,31 +254,42 @@ export default {
   font-weight: 500;
   color: #8f8f8f;
 }
-.close-button,
-.detail-button,
-.select-button {
+.button {
   display: flex;
   border-radius: 10px;
   margin-top: 16px;
   width: 100%;
   min-height: 45px;
+  font-size: 0.9rem;
+  cursor: pointer;
   justify-content: center;
-  padding: auto;
   align-items: center;
+}
+
+.button:hover {
+  font-size: 1.1rem;
+}
+.button:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
 }
 .select-button {
   color: #e4e4e4;
-  background-color: #008000;
+  background-color: var(--dark-color);
+}
+.next-button {
+  color: #e4e4e4;
+  background-color: var(--secondary-color);
 }
 .close-button,
 .detail-button {
   color: #000000;
-  border: 2px solid #008000;
-  background-color: #a5e887;
+  border: 2px solid var(--dark-color);
+  background-color: var(--light-color);
 }
 .close-button {
   color: #e4e4e4;
-  background-color: #008000;
+  background-color: var(--dark-color);
   position: absolute;
   bottom: 16px;
   width: 85%;
@@ -257,13 +300,13 @@ export default {
 .flipper,
 .card {
   width: 400px;
-  height: 330px;
+  height: 360px;
   margin: 12px;
   border-radius: 13px;
 }
 .front,
 .back {
-  width: 400px;
+  width: 390px;
   backface-visibility: hidden;
   position: absolute;
   top: 0;
@@ -273,17 +316,16 @@ export default {
 .front-content,
 .back-content {
   border-radius: 13px;
-
-  height: 350px;
-  min-height: 350px;
+  height: 370px;
+  min-height: 370px;
 }
 
 .front-content {
-  background-color: #a5e887;
+  background-color: var(--light-color);
 }
 
 .back-content {
-  background-color: #00cc77;
+  background-color: var(--primary-color);
   color: #f5f5f5;
 }
 

@@ -18,7 +18,8 @@
         <ElCol :span="20">
           <ElMenu
             :default-active="activeIndex"
-            class="ElMenu-demo"
+            class="nav-menu"
+            background-color="var(--background-color)"
             mode="horizontal"
           >
             <ElMenu-item index="1" @click="goToHome"> Packages </ElMenu-item>
@@ -55,8 +56,41 @@ export default {
 </script>
 
 <style >
+:root {
+  --dark-color: #386641;
+  --primary-color: #6A994E;
+  --light-color: #c0d888;
+  /* --light-color: #A7C957; */
+  /* --light-color: #a5e887; */
+  --secondary-color: #BC4749;
+  --background-color: #F2E8CF;
+}
 body {
-  background-color: #EDFFFD;
+  background-color: var(--background-color);
+  font-family: sans-serif;
+  color: var(--dark-color);
+}
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+h2 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+h3 {
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+h4 {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.nav-menu {
+  background-color: var(--background-color);
+  font: 1.4rem;
+  font-weight: 500;
 }
 .main-container {
   min-width: 320px;
