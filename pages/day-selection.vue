@@ -1,11 +1,13 @@
 <template>
-  <Tutorial />
+  <DaySelection />
 </template>
 
 <script lang="ts">
 import Vue from 'vue'
+import DaySelection from '~/components/DaySelection.vue'
 
 export default Vue.extend({
-  name: 'DaySelection',
+  name: 'DaySelectionPage',
+  components: { DaySelection }
 })
 </script>

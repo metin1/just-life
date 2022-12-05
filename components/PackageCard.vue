@@ -8,6 +8,7 @@
       :autoplay="false"
       height="380px"
       width="300px"
+      trigger="click"
     >
       <ElCarouselItem
         class="carousel-container"
@@ -48,12 +49,12 @@
                 class="button select-button front-select-button"
                 @click="handleSelectPackage(pack)"
                 :style="
-                selectedPackage?.id === pack.id
-                  ? 'backgroundColor: var(--secondary-color);'
-                  : 'backgroundColor: var(--dark-color);'
-              "
+                  selectedPackage?.id === pack.id
+                    ? 'backgroundColor: var(--secondary-color);'
+                    : 'backgroundColor: var(--dark-color);'
+                "
               >
-                {{selectedPackage?.id === pack.id ? 'Selected' : 'Select'}}
+                {{ selectedPackage?.id === pack.id ? 'Selected' : 'Select' }}
               </button>
             </ElCard>
           </div>
@@ -101,13 +102,24 @@
       >
         Selected Package: {{ selectedPackage?.name || 'none' }}
       </h4>
+      <div
+        v-if="selectedPackage?.isOneTime || !selectedPackage?.name"
+        style="height: 1.1rem"
+      />
+      <em v-else>
+        SAVE UP TO
+        {{ calcSave(selectedPackage?.price, selectedPackage?.visit) }} SAR
+      </em>
       <p v-if="!!selectedPackage?.name">
         If you are ready to proceed, please click the button below.
       </p>
       <p v-else>Please select a package to proceed.</p>
-      <button class="button next-button" :disabled="!selectedPackage?.name">
-        Next
-      </button>
+
+      <NuxtLink to="/day-selection" :disabled="!selectedPackage?.name">
+        <button class="button next-button" :disabled="!selectedPackage?.name">
+          Next
+        </button>
+      </NuxtLink>
     </div>
   </ElContainer>
 </template>
@@ -130,6 +142,7 @@ export default {
             'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec auctor, nisl eget ultricies tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nunc eget nisl. Donec auctor, nisl eget ultricies tincidunt, nunc nisl aliquam nisl, eget aliquam nisl nunc eget nisl.',
           isOneTime: true,
           price: 40,
+          visit: 1,
           discount: 0,
           image:
             'https://images.unsplash.com/photo-1616161616161-1b1b1b1b1b1b?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1050&q=80',
@@ -204,6 +217,7 @@ export default {
       this.detailCard = transferFlip
     },
     calcSave(price, visit) {
+      if (!price || !visit) return 0
       return (40 - price) * 4 * visit
     },
     handleSelectPackage: function (pack) {

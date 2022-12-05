@@ -2,9 +2,9 @@
   <div class="main-container center">
     <ElHeader class="main-container">
       <ElRow>
-        <ElCol :span="4">
+        <ElCol :span="8">
+          <NuxtLink to="/">
           <div class="logo-container">
-            <NuxtLink to="/">
               <img
                 class="logo"
                 src="../assets/logo.png"
@@ -12,10 +12,13 @@
                 height="45"
                 alt="logo"
               />
-            </NuxtLink>
-          </div>
+              <div class="logo-text">
+                JUST LIFE
+              </div>
+            </div>
+          </NuxtLink>
         </ElCol>
-        <ElCol :span="20">
+        <ElCol :span="16">
           <ElMenu
             :default-active="activeIndex"
             class="nav-menu"
@@ -52,6 +55,16 @@ export default {
       this.$router.push('/day-selection')
     },
   },
+  watch: {
+    $route(to, from) {
+      if (to.path === '/') {
+        this.activeIndex = '1'
+      } else if (to.path === '/day-selection') {
+        this.activeIndex = '2'
+      }
+    },
+  },
+
 }
 </script>
 
@@ -63,6 +76,7 @@ export default {
   /* --light-color: #A7C957; */
   /* --light-color: #a5e887; */
   --secondary-color: #BC4749;
+  --danger-color: #ffbfbf;
   --background-color: #F2E8CF;
 }
 body {
@@ -87,6 +101,10 @@ h4 {
   font-weight: 700;
 }
 
+a {
+  color: var(--dark-color);
+  text-decoration: none;
+}
 .nav-menu {
   background-color: var(--background-color);
   font: 1.4rem;
@@ -96,7 +114,7 @@ h4 {
   min-width: 320px;
   width: 95vw;
   max-width: 1366px;
-  margin: 16px auto;
+  margin: 0px auto;
 }
 .container {
   min-width: 300px;
@@ -104,7 +122,7 @@ h4 {
   max-width: 1300px;
   display: flex;
   justify-content: center;
-  min-height: calc(100vh - 121px);
+  min-height: calc(100vh - 136px);
 }
 .center {
   display: grid;
@@ -116,6 +134,7 @@ h4 {
   display: flex;
   justify-content: center;
   justify-items: center;
+  align-items: center;
 }
 .logo {
   cursor: pointer;
@@ -125,9 +144,14 @@ h4 {
   justify-content: center;
   justify-items: center;
   width: 100%;
-  margin: 10px auto;
+  margin: 0px auto;
 }
 .w-full {
   width: 100%;
+}
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-left: 10px;
 }
 </style>
