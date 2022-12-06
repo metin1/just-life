@@ -52,4 +52,8 @@ export default {
     standalone: true,
     transpile: [/^element-ui/],
   },
+  target: 'static',
+  generate: {
+    fallback: true
+  }
 }
