@@ -73,8 +73,6 @@ export default {
   --dark-color: #386641;
   --primary-color: #6A994E;
   --light-color: #c0d888;
-  /* --light-color: #A7C957; */
-  /* --light-color: #a5e887; */
   --secondary-color: #BC4749;
   --danger-color: #ffbfbf;
   --background-color: #F2E8CF;
