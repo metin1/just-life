@@ -1,4 +1,4 @@
-# just-life-3
+# Just Life
 
 ![](https://github.com/metin1/just-life/blob/master/assets/logo-512.png?raw=true)
 ## Live Demo
